@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Data Grid with pagination</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/carlosrocha/react-data-components@master/css/table-twbs.css">
+
+    <script src="https://fb.me/react-with-addons-15.1.0.js"></script>
+    <script src="https://fb.me/react-dom-15.1.0.js"></script>
+    <script src="https://npmcdn.com/react-data-components@1.0.1/dist/react-data-components.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+    
+</head>
+<body>
+    <h2 style="padding: 10px; text-align: center; background-color: #61b196;">
+        React Data Grid with pagination
+    </h2>
+
+    <div id="app"></div>
+
+    <script type="text/babel">
+
+        var DataTable = ReactDataComponents.DataTable;
+
+        const jPersons = (xsize) => {
+
+            // Generate random data
+            var names = [ 'Grzegorz', 'Janusz', 'Mariusz','Marcin', 'Albin', 'Janusz', 'Dariusz','Kuba','Wojciech' ];
+            const surnames = ['Michalak','Faber','Sajnok','Brozyna','Rudnicki','Biniek','Banot','Machura','Garnys','Borg','Derda'];
+            var cities = [ 'Sopot', 'Lublin', 'Kraków', 'Katowice', 'Bydgoszcz', 'Rawa Maz.','Pisz','Opole','Starogard' ];
+            var addresses = [ 'ul. Mickiewicza', 'al. Dmowskiego', 'ul. Dynasy', 'ul. Bema','ul. Rozbrat',
+            'ul. Piwna','ul. Widok','al. Kościuszki','ul. Boczna','al. 3 Maja','ul. Bracka'];
+
+            var data = [];
+            for (var i = 0; i < xsize; i++) {
+                data.push({
+                    id: i,
+                    name: names[~~(Math.random() * names.length)] + ' '+ surnames[~~(Math.random() * surnames.length)],
+                    city: cities[~~(Math.random() * cities.length)],
+                    address: addresses[~~(Math.random() * addresses.length)]+' '+ ~~(Math.random() * 120),
+                });
+            }
+
+            return(data);
+        }
+
+        const data = jPersons(500);
+
+        var columns = [
+        { title: 'Name', prop: 'name'  },
+        { title: 'City', prop: 'city' },
+        { title: 'Address', prop: 'address' }
+        ];
+
+        ReactDOM.render((
+            <DataTable
+            className="container"
+            keys="id"
+            columns={columns}
+            initialData={data}
+            initialPageLength={20}
+            pageLengthOptions={[ 5, 10, 20, 50 ]}
+            />
+        ), document.querySelector('#app'));
+
+    </script>
+
+</body>
+</html>
